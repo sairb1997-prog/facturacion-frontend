@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+
+import { AuthService } from '../../shared/services/auth/auth.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,6 +10,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./dashboard.css']
 })
 export class Dashboard {
+  constructor(
+    private readonly auth: AuthService,
+    private readonly router: Router
+  ) {}
+
   sidebarCollapsed = false;
   activeSection = 'overview';
   currentMonth = new Date().getMonth();
@@ -41,6 +49,12 @@ export class Dashboard {
 
   onAction(): void {
     console.log('Action for:', this.activeSection);
+  }
+
+  /** Cierra la sesión y regresa a la presentación (home). */
+  exitPlatform(): void {
+    this.auth.logout();
+    this.router.navigate(['/home']);
   }
 
   // Overview stats

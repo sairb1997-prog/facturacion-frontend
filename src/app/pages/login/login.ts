@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { AuthService } from '../../shared/services/auth/auth.service';
+
 @Component({
   selector: 'app-login',
   standalone: false,
@@ -22,7 +24,10 @@ export class Login {
     'Reportes exportables en PDF y Excel'
   ];
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private auth: AuthService
+  ) {}
 
   togglePassword(): void {
     this.showPassword = !this.showPassword;
@@ -35,15 +40,15 @@ export class Login {
       return;
     }
     this.isLoading = true;
-    // Simulate auth
-    setTimeout(() => {
-      this.isLoading = false;
-      if (this.email === 'admin@factupro.com' && this.password === 'admin123') {
-        this.router.navigate(['/dashboard']);
-      } else {
-        this.errorMessage = 'Credenciales incorrectas. Usa la cuenta demo.';
-      }
-    }, 1500);
+    this.auth
+      .login({ email: this.email, password: this.password })
+      .then(() => this.router.navigate(['/dashboard']))
+      .catch((error: Error) => {
+        this.errorMessage = error.message;
+      })
+      .finally(() => {
+        this.isLoading = false;
+      });
   }
 
   loginDemo(): void {

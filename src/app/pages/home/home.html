@@ -1,87 +1,87 @@
 <!-- ========================
      HOME PAGE
      ======================== -->
-<main class="home-page min-h-screen">
+<main class="home-page">
+  <!-- Header exclusivo del flujo público (presentación) -->
+  <app-navbar></app-navbar>
 
   <!-- Hero Section -->
-  <section class="hero relative min-h-screen flex items-center overflow-hidden py-20" id="hero-section">
-    <div class="hero-bg absolute inset-0 pointer-events-none">
+  <section class="hero" id="hero-section">
+    <div class="hero-bg">
       <div class="orb orb-1"></div>
       <div class="orb orb-2"></div>
       <div class="orb orb-3"></div>
       <div class="grid-overlay"></div>
     </div>
 
-    <div class="container grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center relative z-10">
-      <div class="hero-content flex flex-col gap-6 text-center lg:text-left">
-        <div class="flex justify-center lg:justify-start">
-          <span class="badge badge-primary animate-fade-up delay-1 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold">🚀 Sistema de Gestión Empresarial</span>
-        </div>
+    <div class="container">
+      <div class="hero-content">
+        <span class="badge badge-primary animate-fade-up delay-1">🚀 Sistema de Gestión Empresarial</span>
 
-        <h1 class="hero-title text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight animate-fade-up delay-2">
+        <h1 class="hero-title animate-fade-up delay-2">
           Controla tu negocio<br>
           <span class="gradient-text">con precisión total</span>
         </h1>
 
-        <p class="hero-description text-base sm:text-lg text-text-secondary leading-relaxed max-w-lg mx-auto lg:mx-0 animate-fade-up delay-3">
+        <p class="hero-description text-body-1 animate-fade-up delay-3">
           FactuPro unifica tu facturación, inventario y clientes en una plataforma
           inteligente. Ahorra tiempo, reduce errores y toma decisiones basadas en datos reales.
         </p>
 
-        <div class="hero-actions flex gap-4 flex-wrap justify-center lg:justify-start animate-fade-up delay-4">
-          <a routerLink="/login" class="btn btn-primary btn-lg inline-flex items-center gap-2 px-8 py-3.5 rounded-full font-semibold text-base shadow-xl hover:-translate-y-0.5 transition-all" id="hero-cta-primary">
+        <div class="hero-actions animate-fade-up delay-4">
+          <app-button variant="primary" size="high" id="hero-cta-primary" [routerLink]="['/login']">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
               <circle cx="12" cy="12" r="10"/>
               <polygon points="10 8 16 12 10 16 10 8"/>
             </svg>
             Comenzar ahora
-          </a>
-          <a routerLink="/dashboard" class="btn btn-outline btn-lg inline-flex items-center px-8 py-3.5 rounded-full font-semibold text-base transition-all" id="hero-cta-secondary">
+          </app-button>
+          <app-button variant="outline" size="high" id="hero-cta-secondary" [routerLink]="['/dashboard']">
             Ver Demo
-          </a>
+          </app-button>
         </div>
 
-        <div class="hero-stats flex items-center gap-6 justify-center lg:justify-start mt-2 animate-fade-up delay-5">
-          <div class="hero-stat flex flex-col gap-1">
-            <span class="hero-stat-value font-heading text-2xl font-extrabold">+500</span>
-            <span class="hero-stat-label text-xs font-medium text-text-muted">Empresas activas</span>
+        <div class="hero-stats animate-fade-up delay-5">
+          <div class="hero-stat">
+            <span class="hero-stat-value">+500</span>
+            <span class="hero-stat-label">Empresas activas</span>
           </div>
-          <div class="hero-stat-divider w-px h-9 bg-border"></div>
-          <div class="hero-stat flex flex-col gap-1">
-            <span class="hero-stat-value font-heading text-2xl font-extrabold">99.9%</span>
-            <span class="hero-stat-label text-xs font-medium text-text-muted">Disponibilidad</span>
+          <div class="hero-stat-divider"></div>
+          <div class="hero-stat">
+            <span class="hero-stat-value">99.9%</span>
+            <span class="hero-stat-label">Disponibilidad</span>
           </div>
-          <div class="hero-stat-divider w-px h-9 bg-border"></div>
-          <div class="hero-stat flex flex-col gap-1">
-            <span class="hero-stat-value font-heading text-2xl font-extrabold">2.4x</span>
-            <span class="hero-stat-label text-xs font-medium text-text-muted">Más productividad</span>
+          <div class="hero-stat-divider"></div>
+          <div class="hero-stat">
+            <span class="hero-stat-value">2.4x</span>
+            <span class="hero-stat-label">Más productividad</span>
           </div>
         </div>
       </div>
 
       <!-- Hero Visual -->
-      <div class="hero-visual animate-float max-w-[480px] mx-auto w-full">
-        <div class="dashboard-preview bg-bg-card border border-border rounded-3xl overflow-hidden shadow-2xl">
-          <div class="preview-header flex items-center gap-3 px-5 py-3.5 bg-bg-secondary border-b border-border">
-            <div class="preview-dots flex gap-1.5">
+      <div class="hero-visual animate-float">
+        <div class="dashboard-preview">
+          <div class="preview-header">
+            <div class="preview-dots">
               <span></span><span></span><span></span>
             </div>
-            <span class="preview-title text-xs font-medium text-text-secondary ml-1">Dashboard</span>
+            <span class="preview-title">Dashboard</span>
           </div>
-          <div class="preview-stats grid grid-cols-1 sm:grid-cols-3 gap-px bg-border">
-            <div class="preview-stat-card bg-bg-card p-4 flex items-center gap-3" *ngFor="let stat of previewStats">
-              <div class="psc-icon w-10 h-10 rounded-lg flex items-center justify-center text-lg shrink-0" [style.background]="stat.color">{{ stat.icon }}</div>
+          <div class="preview-stats">
+            <div class="preview-stat-card" *ngFor="let stat of previewStats">
+              <div class="psc-icon" [style.background]="stat.color">{{ stat.icon }}</div>
               <div>
-                <div class="psc-value font-heading text-base font-bold text-text-primary">{{ stat.value }}</div>
-                <div class="psc-label text-xs text-text-muted">{{ stat.label }}</div>
+                <div class="psc-value">{{ stat.value }}</div>
+                <div class="psc-label">{{ stat.label }}</div>
               </div>
             </div>
           </div>
-          <div class="preview-chart p-5">
-            <div class="chart-bars flex items-end gap-1.5 h-20 mb-2">
-              <div class="bar flex-1 rounded-t transition-opacity duration-200" *ngFor="let h of chartBars" [style.height.%]="h"></div>
+          <div class="preview-chart">
+            <div class="chart-bars">
+              <div class="bar" *ngFor="let h of chartBars" [style.height.%]="h"></div>
             </div>
-            <span class="chart-label text-xs text-text-muted block text-center">Ventas mensuales</span>
+            <span class="chart-label">Ventas mensuales</span>
           </div>
         </div>
       </div>
@@ -89,58 +89,58 @@
   </section>
 
   <!-- Features Section -->
-  <section class="features py-24 bg-bg-secondary border-t border-b border-border" id="features-section">
-    <div class="container max-w-[1200px] mx-auto px-6">
-      <div class="section-header text-center mb-16 flex flex-col items-center gap-4">
-        <span class="badge badge-accent inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold">Características</span>
-        <h2 class="text-3xl sm:text-4xl font-extrabold">Todo lo que necesita tu empresa</h2>
-        <p class="text-text-secondary text-base max-w-lg">Una plataforma completa para gestionar cada aspecto de tu negocio.</p>
+  <section class="features" id="features-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="badge badge-accent">Características</span>
+        <h2>Todo lo que necesita tu empresa</h2>
+        <p>Una plataforma completa para gestionar cada aspecto de tu negocio.</p>
       </div>
 
-      <div class="features-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div class="feature-card bg-bg-card border border-border rounded-2xl p-8 flex flex-col gap-3 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl animate-fade-up"
-             *ngFor="let feat of features; let i = index"
-             [style.animation-delay]="(i * 0.1) + 's'">
-          <div class="feature-icon w-14 h-14 rounded-xl flex items-center justify-center text-2xl border border-border mb-1" [style.background]="feat.gradient">
+      <div class="features-grid">
+        <div class="feature-card" *ngFor="let feat of features; let i = index"
+             [style.animation-delay]="(i * 0.1) + 's'"
+             class="feature-card animate-fade-up">
+          <div class="feature-icon" [style.background]="feat.gradient">
             <span>{{ feat.icon }}</span>
           </div>
-          <h3 class="text-lg font-bold text-text-primary">{{ feat.title }}</h3>
-          <p class="text-text-secondary text-sm leading-relaxed">{{ feat.description }}</p>
+          <h3>{{ feat.title }}</h3>
+          <p>{{ feat.description }}</p>
         </div>
       </div>
     </div>
   </section>
 
   <!-- CTA Section -->
-  <section class="cta-section py-20" id="cta-section">
-    <div class="container max-w-[1200px] mx-auto px-6">
-      <div class="cta-card glass text-center p-8 sm:p-16 flex flex-col items-center gap-5 relative overflow-hidden rounded-3xl border border-border">
+  <section class="cta-section" id="cta-section">
+    <div class="container">
+      <div class="cta-card glass">
         <div class="cta-orb"></div>
-        <span class="badge badge-primary inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold">¡Empieza hoy!</span>
-        <h2 class="text-2xl sm:text-4xl font-extrabold relative z-10">Lleva tu empresa al siguiente nivel</h2>
-        <p class="text-text-secondary text-base max-w-lg relative z-10">Únete a cientos de empresas que ya confían en FactuPro para gestionar su negocio.</p>
-        <div class="cta-actions flex gap-4 flex-wrap justify-center relative z-10 mt-2">
-          <a routerLink="/login" class="btn btn-primary btn-lg inline-flex items-center px-8 py-3.5 rounded-full font-semibold text-base shadow-xl hover:-translate-y-0.5 transition-all" id="cta-register-btn">
+        <span class="badge badge-primary">¡Empieza hoy!</span>
+        <h2>Lleva tu empresa al siguiente nivel</h2>
+        <p>Únete a cientos de empresas que ya confían en FactuPro para gestionar su negocio.</p>
+        <div class="cta-actions">
+          <app-button variant="primary" size="high" id="cta-register-btn" [routerLink]="['/login']">
             Crear cuenta gratis
-          </a>
-          <a routerLink="/dashboard" class="btn btn-ghost inline-flex items-center px-8 py-3.5 rounded-full font-semibold text-base transition-all" id="cta-demo-btn">
+          </app-button>
+          <app-button variant="ghost" size="medium" id="cta-demo-btn" [routerLink]="['/dashboard']">
             Ver Demo
-          </a>
+          </app-button>
         </div>
       </div>
     </div>
   </section>
 
   <!-- Footer -->
-  <footer class="footer py-10 border-t border-border bg-bg-secondary text-center" id="main-footer">
-    <div class="container max-w-[1200px] mx-auto px-6">
-      <div class="footer-content flex flex-col items-center gap-4 text-center">
-        <div class="footer-brand flex flex-col items-center">
-          <span class="brand-name font-heading text-2xl font-extrabold">Factu<span class="brand-accent text-accent">Pro</span></span>
-          <p class="text-text-muted text-sm max-w-xs mt-1.5">Sistema de facturación e inventario moderno para empresas en crecimiento.</p>
+  <footer class="footer" id="main-footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <span class="brand-name">Factu<span class="brand-accent">Pro</span></span>
+          <p>Sistema de facturación e inventario moderno para empresas en crecimiento.</p>
         </div>
-        <div class="footer-bottom mt-2">
-          <p class="text-text-muted text-xs">© 2026 FactuPro. Todos los derechos reservados.</p>
+        <div class="footer-bottom">
+          <p>© 2026 FactuPro. Todos los derechos reservados.</p>
         </div>
       </div>
     </div>

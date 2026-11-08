@@ -1,0 +1,76 @@
+/* =============================================================
+   TIPOGRAFÍA — clases creadas con Tailwind v4
+
+   En el HTML se usan como cualquier clase de Tailwind:
+     <h1 class="text-title-1">  ·  <p class="text-body-2">
+
+   Convención: el sufijo -1 es el tamaño grande de la familia y
+   el -2 el tamaño más pequeño.
+
+   Reglas del sistema:
+   - Solo 3 propiedades: font-size, font-weight y line-height.
+   - font-size siempre en rem con px enteros (1rem = 16px):
+       3rem=48px · 2.25rem=36px · 1.5rem=24px · 1.25rem=20px
+       1.125rem=18px · 1rem=16px · 0.875rem=14px · 0.75rem=12px
+   - Sin clamp: cada clase tiene un único tamaño fijo.
+   ============================================================= */
+
+/* ---- Títulos ---- */
+@utility text-title-1 {
+  /* 3rem = 48px — tamaño grande para un título */
+  font-size: 3rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+@utility text-title-2 {
+  /* 2.25rem = 36px — título en tamaño menor */
+  font-size: 2.25rem;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+/* ---- Subtítulos ---- */
+@utility text-subtitle-1 {
+  /* 1.5rem = 24px */
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+@utility text-subtitle-2 {
+  /* 1.25rem = 20px */
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+/* ---- Texto de lectura ---- */
+@utility text-body-1 {
+  /* 1.125rem = 18px */
+  font-size: 1.125rem;
+  font-weight: 400;
+  line-height: 1.75;
+}
+
+@utility text-body-2 {
+  /* 1rem = 16px */
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+/* ---- Captions / etiquetas ---- */
+@utility text-caption-1 {
+  /* 0.875rem = 14px */
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+@utility text-caption-2 {
+  /* 0.75rem = 12px */
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.5;
+}

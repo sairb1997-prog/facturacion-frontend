@@ -1,0 +1,154 @@
+/* =============================================================
+   ESTILOS REUTILIZABLES · LOGIN (sistema de formularios)
+   Sistema de inputs, labels, checkboxes y estados que sirve
+   a Login y a cualquier formulario futuro del sistema.
+   ============================================================= */
+
+/* ---- Grupo de campo ---- */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.form-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* ---- Input / control ---- */
+.form-control {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 0.75rem 1rem;
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  transition: all var(--transition-fast);
+  outline: none;
+  width: 100%;
+}
+.form-control::placeholder {
+  color: var(--text-muted);
+}
+.form-control:focus {
+  border-color: var(--primary);
+  background: rgba(108, 99, 255, 0.08);
+  box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.15);
+}
+
+/* ---- Input con icono / botón lateral ---- */
+.input-wrapper {
+  position: relative;
+}
+
+/* Patrón reutilizable: icono o botón centrados verticalmente
+   dentro del input (usable por .input-icon y .toggle-password). */
+.input-wrapper .input-icon,
+.input-wrapper .toggle-password {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+}
+.input-wrapper .input-icon {
+  left: 0.9rem;
+  pointer-events: none;
+}
+.input-wrapper .toggle-password {
+  right: 0.9rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.2s ease;
+}
+.input-wrapper .toggle-password:hover {
+  color: var(--primary-light);
+}
+.input-wrapper .form-control {
+  padding-left: 2.7rem;
+  padding-right: 2.7rem;
+}
+
+/* ---- Opciones (recordar / olvidé mi contraseña) ---- */
+.form-options {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  user-select: none;
+}
+.checkbox-label input[type=checkbox] {
+  display: none;
+}
+.checkbox-label .checkbox-custom {
+  width: 16px;
+  height: 16px;
+  border: 1.5px solid var(--border-strong);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+.checkbox-label input:checked + .checkbox-custom {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+.checkbox-label input:checked + .checkbox-custom::after {
+  content: "✓";
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.forgot-link {
+  font-size: 0.85rem;
+  color: var(--primary-light);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.forgot-link:hover {
+  color: var(--accent);
+}
+
+/* ---- Alerta de error de formulario ---- */
+.login-error {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: rgba(255, 77, 109, 0.1);
+  border: 1px solid rgba(255, 77, 109, 0.3);
+  border-radius: var(--radius-md);
+  color: #ff8099;
+  font-size: 0.85rem;
+}
+
+/* ---- Spinner de carga (botones en estado loading) ---- */
+.loading-spinner {
+  width: 20px;
+  height: 20px;
+  border: 2.5px solid rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}

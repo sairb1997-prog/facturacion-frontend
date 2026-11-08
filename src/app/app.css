@@ -1,12 +1,4 @@
-/* Root app component styles */
 :host {
   display: block;
   min-height: 100vh;
 }
-
-.page-wrapper {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-

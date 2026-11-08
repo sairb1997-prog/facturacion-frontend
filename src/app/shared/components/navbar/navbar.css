@@ -1,0 +1,77 @@
+/* =============================================================
+   NAVBAR — header dinámico de la app.
+   - Flujo público: logo + botón "Ingresar" (único botón visible).
+   - Flujo plataforma (dashboard): logo + botón "Salir"; el botón
+     de perfil vive en el header interno del dashboard.
+   ============================================================= */
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 1.1rem 0;
+  transition: all 0.35s ease;
+  background: transparent;
+}
+/* Estilo sólido al hacer scroll */
+.navbar.scrolled {
+  background: rgba(13, 13, 26, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(108, 99, 255, 0.15);
+  padding: 0.7rem 0;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+}
+
+.nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+/* Marca: conduce al Inicio (ruta principal) */
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+.nav-brand .brand-icon {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  box-shadow: 0 4px 14px var(--primary-glow);
+  transition: box-shadow 0.25s ease;
+}
+.nav-brand:hover .brand-icon {
+  box-shadow: 0 6px 24px var(--primary-glow);
+}
+.nav-brand .brand-name {
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+.nav-brand .brand-accent {
+  color: var(--accent);
+}
+
+/* Acciones del header (según el flujo: Ingresar / Salir) */
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-shrink: 0;
+  margin-left: auto;
+}
