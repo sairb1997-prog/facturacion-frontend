@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
   selector: 'app-home',
   standalone: false,
   templateUrl: './home.html',
-  styleUrls: ['./home.scss']
+  styleUrls: ['./home.css']
 })
 export class Home {
   previewStats = [

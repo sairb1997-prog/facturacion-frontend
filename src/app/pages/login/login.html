@@ -1,19 +1,19 @@
 <!-- ========================
      LOGIN PAGE
      ======================== -->
-<div class="login-page">
+<div class="login-page relative min-h-screen flex items-center justify-center overflow-hidden bg-bg-primary">
   <!-- Background -->
-  <div class="login-bg">
+  <div class="login-bg absolute inset-0 pointer-events-none z-0">
     <div class="login-orb login-orb-1"></div>
     <div class="login-orb login-orb-2"></div>
     <div class="grid-overlay"></div>
   </div>
 
-  <div class="login-wrapper">
+  <div class="login-wrapper relative z-10 w-full max-w-[1100px] mx-auto p-6 md:p-8 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center min-h-screen">
     <!-- Left Panel -->
-    <div class="login-info animate-fade-up">
-      <a routerLink="/" class="login-brand" id="login-brand-link">
-        <div class="brand-icon-lg">
+    <div class="login-info flex flex-col gap-8 lg:gap-10 animate-fade-up">
+      <a routerLink="/" class="login-brand flex items-center gap-3 no-underline font-heading text-2xl font-extrabold text-text-primary" id="login-brand-link">
+        <div class="brand-icon-lg w-[50px] h-[50px] rounded-xl flex items-center justify-center text-white shadow-lg">
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
             <polyline points="14 2 14 8 20 8"/>
@@ -21,16 +21,16 @@
             <line x1="16" y1="17" x2="8" y2="17"/>
           </svg>
         </div>
-        <span>Factu<span class="brand-accent">Pro</span></span>
+        <span>Factu<span class="brand-accent text-accent">Pro</span></span>
       </a>
 
       <div class="login-info-content">
-        <h2>Tu negocio,<br><span class="gradient-text">bajo control.</span></h2>
-        <p>Accede a tu panel de administración para gestionar facturas, inventario y clientes en tiempo real.</p>
+        <h2 class="text-3xl md:text-4xl lg:text-[2.6rem] font-extrabold leading-tight mb-4">Tu negocio,<br><span class="gradient-text">bajo control.</span></h2>
+        <p class="text-text-secondary text-base leading-relaxed max-w-[380px]">Accede a tu panel de administración para gestionar facturas, inventario y clientes en tiempo real.</p>
 
-        <div class="login-features">
-          <div class="login-feature" *ngFor="let f of loginFeatures">
-            <div class="lf-check">✓</div>
+        <div class="login-features flex flex-col gap-3 mt-4">
+          <div class="login-feature flex items-center gap-3 text-text-secondary text-sm md:text-base font-normal" *ngFor="let f of loginFeatures">
+            <div class="lf-check w-[22px] h-[22px] rounded-full flex items-center justify-center text-xs text-accent font-bold shrink-0">✓</div>
             <span>{{ f }}</span>
           </div>
         </div>
@@ -38,19 +38,19 @@
     </div>
 
     <!-- Right Panel (Form) -->
-    <div class="login-form-panel animate-fade-up delay-2">
-      <div class="login-form-card glass">
-        <div class="lfc-header">
-          <h1>Bienvenido</h1>
-          <p>Ingresa tus credenciales para continuar</p>
+    <div class="login-form-panel flex items-center justify-center w-full animate-fade-up delay-2">
+      <div class="login-form-card glass w-full max-w-[440px] p-6 sm:p-10 rounded-3xl shadow-2xl">
+        <div class="lfc-header mb-6">
+          <h1 class="text-2xl sm:text-3xl font-extrabold mb-1">Bienvenido</h1>
+          <p class="text-text-muted text-sm">Ingresa tus credenciales para continuar</p>
         </div>
 
-        <form class="login-form" (ngSubmit)="onLogin()" id="login-form" #loginForm="ngForm">
+        <form class="login-form flex flex-col gap-4" (ngSubmit)="onLogin()" id="login-form" #loginForm="ngForm">
 
-          <div class="form-group">
-            <label class="form-label" for="email-input">Correo electrónico</label>
-            <div class="input-wrapper">
-              <span class="input-icon">
+          <div class="form-group flex flex-col gap-1.5">
+            <label class="form-label text-xs font-semibold text-text-secondary uppercase tracking-wider" for="email-input">Correo electrónico</label>
+            <div class="input-wrapper relative">
+              <span class="input-icon absolute left-3.5 top-1/2 -translate-y-1/2 text-text-muted flex items-center pointer-events-none">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
                   <polyline points="22,6 12,13 2,6"/>
@@ -59,7 +59,7 @@
               <input
                 id="email-input"
                 type="email"
-                class="form-control"
+                class="form-control w-full pl-11 pr-11 py-3 text-sm rounded-xl transition-all"
                 placeholder="correo@empresa.com"
                 [(ngModel)]="email"
                 name="email"
@@ -68,10 +68,10 @@
             </div>
           </div>
 
-          <div class="form-group">
-            <label class="form-label" for="password-input">Contraseña</label>
-            <div class="input-wrapper">
-              <span class="input-icon">
+          <div class="form-group flex flex-col gap-1.5">
+            <label class="form-label text-xs font-semibold text-text-secondary uppercase tracking-wider" for="password-input">Contraseña</label>
+            <div class="input-wrapper relative">
+              <span class="input-icon absolute left-3.5 top-1/2 -translate-y-1/2 text-text-muted flex items-center pointer-events-none">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
                   <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
@@ -80,7 +80,7 @@
               <input
                 id="password-input"
                 [type]="showPassword ? 'text' : 'password'"
-                class="form-control"
+                class="form-control w-full pl-11 pr-11 py-3 text-sm rounded-xl transition-all"
                 placeholder="••••••••"
                 [(ngModel)]="password"
                 name="password"
@@ -88,7 +88,7 @@
               >
               <button
                 type="button"
-                class="toggle-password"
+                class="toggle-password absolute right-3.5 top-1/2 -translate-y-1/2 text-text-muted hover:text-primary-light transition-colors"
                 (click)="togglePassword()"
                 id="toggle-password-btn"
                 aria-label="Toggle password visibility"
@@ -105,16 +105,16 @@
             </div>
           </div>
 
-          <div class="form-options">
-            <label class="checkbox-label" id="remember-me-label">
+          <div class="form-options flex items-center justify-between flex-wrap gap-2 text-sm">
+            <label class="checkbox-label flex items-center gap-2 cursor-pointer text-text-secondary text-xs sm:text-sm select-none" id="remember-me-label">
               <input type="checkbox" id="remember-me" [(ngModel)]="rememberMe" name="rememberMe">
               <span class="checkbox-custom"></span>
               <span>Recordarme</span>
             </label>
-            <a href="#" class="forgot-link" id="forgot-password-link">¿Olvidaste tu contraseña?</a>
+            <a href="#" class="forgot-link text-xs sm:text-sm text-primary-light hover:text-accent transition-colors" id="forgot-password-link">¿Olvidaste tu contraseña?</a>
           </div>
 
-          <div class="login-error animate-fade-in" *ngIf="errorMessage" id="login-error-msg">
+          <div class="login-error animate-fade-in flex items-center gap-2 p-3 rounded-xl text-sm" *ngIf="errorMessage" id="login-error-msg">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
             </svg>
@@ -123,11 +123,11 @@
 
           <button
             type="submit"
-            class="btn btn-primary btn-full"
+            class="btn btn-primary btn-full w-full justify-center py-3.5 text-sm font-semibold rounded-full shadow-lg transition-all"
             [disabled]="isLoading"
             id="login-submit-btn"
           >
-            <span *ngIf="!isLoading">
+            <span *ngIf="!isLoading" class="inline-flex items-center gap-2">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                 <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
                 <polyline points="10 17 15 12 10 7"/>
@@ -135,18 +135,18 @@
               </svg>
               Ingresar al sistema
             </span>
-            <span *ngIf="isLoading" class="loading-spinner"></span>
+            <span *ngIf="isLoading" class="loading-spinner inline-block w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
           </button>
 
-          <div class="login-divider">
+          <div class="login-divider flex items-center gap-3 text-text-muted text-xs my-1">
             <span>o</span>
           </div>
 
-          <div class="demo-login">
-            <p>¿Quieres probar la plataforma?</p>
+          <div class="demo-login flex flex-col gap-2.5 items-center text-center">
+            <p class="text-xs text-text-muted">¿Quieres probar la plataforma?</p>
             <button
               type="button"
-              class="btn btn-ghost btn-full"
+              class="btn btn-ghost btn-full w-full justify-center py-3 text-sm font-semibold rounded-full transition-all"
               (click)="loginDemo()"
               id="demo-login-btn"
             >

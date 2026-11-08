@@ -1,0 +1,100 @@
+/* ---- Home Component Styles ---- */
+.home-page {
+  min-height: 100vh;
+}
+
+/* Background orbs */
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.35;
+  animation: float 6s ease-in-out infinite;
+}
+
+.orb-1 {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, var(--primary), transparent);
+  top: -100px;
+  left: -100px;
+  animation-duration: 7s;
+}
+
+.orb-2 {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, var(--accent), transparent);
+  bottom: -80px;
+  right: -50px;
+  animation-duration: 9s;
+  animation-delay: -3s;
+}
+
+.orb-3 {
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(255, 77, 109, 0.6), transparent);
+  top: 50%;
+  right: 30%;
+  animation-duration: 5s;
+  animation-delay: -1.5s;
+}
+
+.grid-overlay {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(108, 99, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(108, 99, 255, 0.05) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+.hero-stat-value {
+  background: linear-gradient(135deg, var(--primary-light), var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Dashboard preview */
+.dashboard-preview {
+  box-shadow: var(--shadow-lg), 0 0 60px rgba(108, 99, 255, 0.2);
+}
+
+.preview-dots span:nth-child(1) { background: #ff5f57; }
+.preview-dots span:nth-child(2) { background: #febc2e; }
+.preview-dots span:nth-child(3) { background: #28c840; }
+
+.bar {
+  background: linear-gradient(to top, var(--primary-dark), var(--primary-light));
+  min-height: 10%;
+  opacity: 0.85;
+}
+
+.bar:hover {
+  opacity: 1;
+}
+
+/* Feature card */
+.feature-card {
+  animation-fill-mode: both;
+}
+
+.feature-card:hover {
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-primary);
+}
+
+/* CTA */
+.cta-card .cta-orb {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(108, 99, 255, 0.2), transparent 70%);
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}

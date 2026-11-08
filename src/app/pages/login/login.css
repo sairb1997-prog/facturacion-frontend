@@ -1,0 +1,101 @@
+/* ---- Login Component Styles ---- */
+.login-page {
+  background: var(--bg-primary);
+}
+
+.login-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.3;
+}
+
+.login-orb-1 {
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, var(--primary), transparent);
+  top: -150px;
+  left: -150px;
+}
+
+.login-orb-2 {
+  width: 450px;
+  height: 450px;
+  background: radial-gradient(circle, var(--accent), transparent);
+  bottom: -100px;
+  right: -80px;
+}
+
+.grid-overlay {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(108, 99, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(108, 99, 255, 0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+.login-brand .brand-icon-lg {
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  box-shadow: var(--shadow-primary);
+}
+
+.login-feature .lf-check {
+  background: rgba(0, 212, 170, 0.15);
+  border: 1px solid rgba(0, 212, 170, 0.4);
+}
+
+.login-form-card {
+  background: rgba(26, 26, 53, 0.8);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/* Custom Checkbox */
+.checkbox-label input[type="checkbox"] {
+  display: none;
+}
+
+.checkbox-label .checkbox-custom {
+  width: 16px;
+  height: 16px;
+  border: 1.5px solid var(--border-strong);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.checkbox-label input:checked + .checkbox-custom {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+
+.checkbox-label input:checked + .checkbox-custom::after {
+  content: '✓';
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.login-error {
+  background: rgba(255, 77, 109, 0.1);
+  border: 1px solid rgba(255, 77, 109, 0.3);
+  color: #ff8099;
+}
+
+.loading-spinner {
+  border-top-color: white;
+  animation: spin 0.7s linear infinite;
+}
+
+.login-divider::before,
+.login-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}

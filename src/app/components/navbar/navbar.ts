@@ -4,7 +4,7 @@ import { Component, HostListener, OnInit } from '@angular/core';
   selector: 'app-navbar',
   standalone: false,
   templateUrl: './navbar.html',
-  styleUrls: ['./navbar.scss']
+  styleUrls: ['./navbar.css']
 })
 export class Navbar implements OnInit {
   isScrolled = false;

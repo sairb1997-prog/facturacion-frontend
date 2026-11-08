@@ -1,6 +1,4 @@
-// Root app component styles
-// Layout handled globally in styles.scss
-
+/* Root app component styles */
 :host {
   display: block;
   min-height: 100vh;
@@ -11,3 +9,4 @@
   display: flex;
   flex-direction: column;
 }
+

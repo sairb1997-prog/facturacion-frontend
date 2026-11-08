@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
   selector: 'app-dashboard',
   standalone: false,
   templateUrl: './dashboard.html',
-  styleUrls: ['./dashboard.scss']
+  styleUrls: ['./dashboard.css']
 })
 export class Dashboard {
   sidebarCollapsed = false;

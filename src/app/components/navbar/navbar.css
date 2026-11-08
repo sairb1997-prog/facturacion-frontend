@@ -1,0 +1,108 @@
+/* ---- Navbar Component Styles ---- */
+.navbar {
+  transition: all 0.35s ease;
+}
+
+.navbar.scrolled {
+  background: rgba(13, 13, 26, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(108, 99, 255, 0.15);
+  padding-top: 0.7rem;
+  padding-bottom: 0.7rem;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+}
+
+.nav-brand .brand-icon {
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  box-shadow: 0 4px 14px var(--primary-glow);
+  transition: box-shadow 0.25s ease;
+}
+
+.nav-brand:hover .brand-icon {
+  box-shadow: 0 6px 24px var(--primary-glow);
+}
+
+.nav-links li a.active {
+  color: var(--primary-light);
+  background: rgba(108, 99, 255, 0.15);
+  font-weight: 600;
+}
+
+.nav-links li a.active svg {
+  opacity: 1;
+}
+
+/* Hamburger */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.hamburger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--text-primary);
+  border-radius: 2px;
+  transition: all 0.3s ease;
+  transform-origin: center;
+}
+
+.hamburger.active span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.hamburger.active span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hamburger {
+    display: flex;
+  }
+
+  .nav-links {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+    background: rgba(13, 13, 26, 0.97);
+    backdrop-filter: blur(20px);
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(0.96);
+    transition: all 0.3s ease;
+    margin: 0;
+  }
+
+  .nav-links.open {
+    opacity: 1;
+    pointer-events: all;
+    transform: scale(1);
+  }
+
+  .nav-links li a {
+    font-size: 1.2rem;
+    padding: 0.8rem 2rem;
+  }
+
+  .nav-actions a.btn {
+    display: none;
+  }
+}

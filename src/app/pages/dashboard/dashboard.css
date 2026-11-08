@@ -1,0 +1,156 @@
+/* ---- Dashboard Component Styles ---- */
+.dashboard-page {
+  display: flex;
+  min-height: 100vh;
+  background: var(--bg-primary);
+}
+
+/* Sidebar */
+.sidebar {
+  width: 240px;
+  min-height: 100vh;
+  background: var(--bg-secondary);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 200;
+  transition: width 0.3s ease;
+  overflow: hidden;
+}
+
+.sidebar.collapsed {
+  width: 68px;
+}
+
+.sidebar-logo {
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+}
+
+.sidebar-link.active {
+  background: rgba(108, 99, 255, 0.15);
+  color: var(--primary-light);
+  font-weight: 600;
+  position: relative;
+}
+
+.sidebar-link.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 20%;
+  bottom: 20%;
+  width: 3px;
+  background: var(--primary);
+  border-radius: 0 3px 3px 0;
+}
+
+.nav-badge {
+  background: var(--primary);
+  color: white;
+}
+
+.sidebar-user .user-avatar {
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+}
+
+/* Main */
+.dashboard-main {
+  margin-left: 240px;
+  transition: margin-left 0.3s ease;
+}
+
+.sidebar.collapsed ~ .dashboard-main,
+.dashboard-page:has(.sidebar.collapsed) .dashboard-main {
+  margin-left: 68px;
+}
+
+.header-avatar {
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  transition: box-shadow 0.2s ease;
+}
+
+.header-avatar:hover {
+  box-shadow: 0 0 0 3px var(--primary-glow);
+}
+
+/* Bar Chart */
+.chart-bar-fill {
+  background: linear-gradient(to top, var(--primary-dark), var(--primary-light));
+  min-height: 4px;
+  opacity: 0.7;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.chart-bar-fill:hover {
+  opacity: 1;
+  transform: scaleY(1.02);
+  transform-origin: bottom;
+}
+
+.chart-bar-fill.current {
+  background: linear-gradient(to top, var(--accent-dark), var(--accent-light));
+  opacity: 1;
+  box-shadow: 0 0 10px var(--accent-glow);
+}
+
+/* Activity */
+.activity-item .activity-dot {
+  box-shadow: 0 0 6px currentColor;
+}
+
+/* Table */
+.data-table tr:hover td {
+  background: rgba(108, 99, 255, 0.04);
+}
+
+.data-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* Inventory */
+.inventory-card .stock-bar .stock-fill {
+  transition: width 0.5s ease;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .charts-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 68px;
+  }
+
+  .dashboard-main {
+    margin-left: 68px !important;
+  }
+
+  .sidebar-brand,
+  .sidebar-label,
+  .nav-badge,
+  .sidebar-user,
+  .nav-section-label {
+    display: none;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .search-box {
+    display: none;
+  }
+}
