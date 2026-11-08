@@ -1,0 +1,13 @@
+// Root app component styles
+// Layout handled globally in styles.scss
+
+:host {
+  display: block;
+  min-height: 100vh;
+}
+
+.page-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}

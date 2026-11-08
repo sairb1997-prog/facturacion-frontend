@@ -1,0 +1,232 @@
+<!-- ========================
+     DASHBOARD PAGE
+     ======================== -->
+<main class="dashboard-page">
+
+  <!-- Sidebar -->
+  <aside class="sidebar" [class.collapsed]="sidebarCollapsed" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-brand" *ngIf="!sidebarCollapsed">
+        <div class="sidebar-logo">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+          </svg>
+        </div>
+        <span>Factu<span class="brand-accent">Pro</span></span>
+      </div>
+      <button class="sidebar-toggle" (click)="toggleSidebar()" id="sidebar-toggle-btn" aria-label="Toggle sidebar">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-section-label" *ngIf="!sidebarCollapsed">Principal</div>
+      <ul>
+        <li *ngFor="let item of navItems">
+          <a [id]="'sidebar-nav-' + item.id"
+             [class.active]="activeSection === item.id"
+             (click)="setSection(item.id)"
+             class="sidebar-link"
+             [title]="item.label">
+            <span class="sidebar-icon" [innerHTML]="item.icon"></span>
+            <span class="sidebar-label" *ngIf="!sidebarCollapsed">{{ item.label }}</span>
+            <span class="nav-badge" *ngIf="item.badge && !sidebarCollapsed">{{ item.badge }}</span>
+          </a>
+        </li>
+      </ul>
+
+      <div class="nav-section-label" *ngIf="!sidebarCollapsed" style="margin-top:1rem;">Sistema</div>
+      <ul>
+        <li>
+          <a class="sidebar-link" id="sidebar-nav-settings" title="Configuración">
+            <span class="sidebar-icon">⚙️</span>
+            <span class="sidebar-label" *ngIf="!sidebarCollapsed">Configuración</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/login" class="sidebar-link" id="sidebar-nav-logout" title="Cerrar sesión">
+            <span class="sidebar-icon">🚪</span>
+            <span class="sidebar-label" *ngIf="!sidebarCollapsed">Cerrar sesión</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- User info -->
+    <div class="sidebar-user" *ngIf="!sidebarCollapsed">
+      <div class="user-avatar">A</div>
+      <div>
+        <div class="user-name">Admin</div>
+        <div class="user-role">Administrador</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <div class="dashboard-main">
+
+    <!-- Top Bar -->
+    <header class="dashboard-header" id="dashboard-header">
+      <div class="header-left">
+        <h1 class="page-title">{{ currentSection.title }}</h1>
+        <p class="page-subtitle">{{ currentSection.subtitle }}</p>
+      </div>
+      <div class="header-right">
+        <div class="search-box" id="dashboard-search">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+          <input type="text" placeholder="Buscar..." class="search-input" id="search-input">
+        </div>
+        <button class="btn btn-primary btn-sm" id="header-action-btn" (click)="onAction()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+          </svg>
+          {{ currentSection.action }}
+        </button>
+        <div class="header-avatar" id="header-user-avatar">A</div>
+      </div>
+    </header>
+
+    <!-- Page: Overview -->
+    <section class="dashboard-content" *ngIf="activeSection === 'overview'" id="section-overview">
+      <!-- Stats -->
+      <div class="stats-grid">
+        <div class="stat-card" *ngFor="let stat of stats; let i = index"
+             [style.animation-delay]="(i * 0.08) + 's'"
+             class="stat-card animate-fade-up">
+          <div class="stat-icon" [style.background]="stat.bg">{{ stat.icon }}</div>
+          <div class="stat-value">{{ stat.value }}</div>
+          <div class="stat-label">{{ stat.label }}</div>
+          <div class="stat-change" [class.positive]="stat.positive" [class.negative]="!stat.positive">
+            {{ stat.positive ? '↑' : '↓' }} {{ stat.change }}
+          </div>
+        </div>
+      </div>
+
+      <!-- Charts Row -->
+      <div class="charts-row">
+        <!-- Sales Chart -->
+        <div class="chart-card card animate-fade-up delay-3">
+          <div class="chart-card-header">
+            <h3>Ventas Mensuales</h3>
+            <span class="badge badge-accent">2026</span>
+          </div>
+          <div class="bar-chart">
+            <div class="chart-bars-container">
+              <div class="chart-bar-group" *ngFor="let m of months; let i = index">
+                <div class="chart-bar-fill" [style.height.%]="salesData[i]"
+                     [class.current]="i === currentMonth"
+                     [title]="m + ': $' + (salesData[i] * 500) + ''" ></div>
+                <span class="month-label">{{ m }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="activity-card card animate-fade-up delay-4">
+          <div class="chart-card-header">
+            <h3>Actividad Reciente</h3>
+            <span class="badge badge-primary">Hoy</span>
+          </div>
+          <div class="activity-list">
+            <div class="activity-item" *ngFor="let act of recentActivity">
+              <div class="activity-dot" [style.background]="act.color"></div>
+              <div class="activity-info">
+                <span class="activity-text">{{ act.text }}</span>
+                <span class="activity-time">{{ act.time }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Invoices Table -->
+      <div class="table-card card animate-fade-up delay-5">
+        <div class="table-header">
+          <h3>Facturas Recientes</h3>
+          <button class="btn btn-ghost btn-sm" id="view-all-invoices-btn">Ver todas</button>
+        </div>
+        <div class="table-wrapper">
+          <table class="data-table" id="invoices-table">
+            <thead>
+              <tr>
+                <th>N° Factura</th>
+                <th>Cliente</th>
+                <th>Fecha</th>
+                <th>Monto</th>
+                <th>Estado</th>
+                <th>Acción</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let inv of recentInvoices">
+                <td class="invoice-id">{{ inv.id }}</td>
+                <td class="client-name">{{ inv.client }}</td>
+                <td class="invoice-date">{{ inv.date }}</td>
+                <td class="invoice-amount">{{ inv.amount }}</td>
+                <td>
+                  <span class="badge" [ngClass]="inv.statusClass">{{ inv.status }}</span>
+                </td>
+                <td>
+                  <button class="btn btn-ghost btn-xs" [id]="'view-invoice-' + inv.id">Ver</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Page: Inventory -->
+    <section class="dashboard-content" *ngIf="activeSection === 'inventory'" id="section-inventory">
+      <div class="inventory-grid">
+        <div class="inventory-card card animate-fade-up" *ngFor="let prod of products; let i = index"
+             [style.animation-delay]="(i * 0.07) + 's'">
+          <div class="product-header">
+            <div class="product-icon">{{ prod.icon }}</div>
+            <span class="badge" [ngClass]="prod.stockClass">{{ prod.stockLabel }}</span>
+          </div>
+          <h4>{{ prod.name }}</h4>
+          <div class="product-meta">
+            <span class="product-price">{{ prod.price }}</span>
+            <span class="product-stock">Stock: {{ prod.stock }}</span>
+          </div>
+          <div class="stock-bar">
+            <div class="stock-fill" [style.width.%]="prod.stockPct" [style.background]="prod.barColor"></div>
+          </div>
+          <div class="product-actions">
+            <button class="btn btn-ghost btn-xs" [id]="'edit-product-' + i">Editar</button>
+            <button class="btn btn-outline btn-xs" [id]="'view-product-' + i">Detalles</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Page: Clients -->
+    <section class="dashboard-content" *ngIf="activeSection === 'clients'" id="section-clients">
+      <div class="clients-list">
+        <div class="client-card card animate-fade-up" *ngFor="let c of clients; let i = index"
+             [style.animation-delay]="(i * 0.06) + 's'">
+          <div class="client-avatar" [style.background]="c.color">{{ c.initials }}</div>
+          <div class="client-info">
+            <h4>{{ c.name }}</h4>
+            <p>{{ c.email }}</p>
+            <p class="client-stats">{{ c.invoices }} facturas · {{ c.total }}</p>
+          </div>
+          <div class="client-actions">
+            <span class="badge" [ngClass]="c.statusClass">{{ c.status }}</span>
+            <button class="btn btn-ghost btn-xs" [id]="'view-client-' + i">Ver</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</main>
