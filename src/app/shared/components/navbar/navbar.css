@@ -1,8 +1,7 @@
 /* =============================================================
-   NAVBAR — header dinámico de la app.
-   - Flujo público: logo + botón "Ingresar" (único botón visible).
-   - Flujo plataforma (dashboard): logo + botón "Salir"; el botón
-     de perfil vive en el header interno del dashboard.
+   NAVBAR — header exclusivo del flujo público.
+   - Logo + botón "Ingresar" (único botón visible).
+   - El cierre de sesión vive en el footer de la plataforma.
    ============================================================= */
 
 .navbar {
@@ -67,7 +66,7 @@
   color: var(--accent);
 }
 
-/* Acciones del header (según el flujo: Ingresar / Salir) */
+/* Acciones del header público (solo Ingresar) */
 .nav-actions {
   display: flex;
   align-items: center;

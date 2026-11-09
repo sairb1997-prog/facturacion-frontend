@@ -23,7 +23,15 @@ export interface LoginCredentials {
 
 /** Sesión autenticada persistida en storage. */
 export interface AuthSession {
+  /** Access token JWT (`Authorization: Bearer <token>`). */
   token: string;
+  /**
+   * Refresh token opaco que devuelve `POST /auth/login`. Se envía a
+   * `POST /auth/logout` para borrar la sesión de `refresh_tokens`.
+   * Es opcional para tolerar sesiones antiguas ya persistidas.
+   */
+  refreshToken?: string;
   user: User;
+  /** Momento de creación de la sesión, en milisegundos (epoch Unix). */
   createdAt: number;
 }

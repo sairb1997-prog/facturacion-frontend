@@ -10,14 +10,16 @@ import { AuthService } from '../../shared/services/auth/auth.service';
   styleUrls: ['./dashboard.css']
 })
 export class Dashboard {
-  constructor(
-    private readonly auth: AuthService,
-    private readonly router: Router
-  ) {}
-
   sidebarCollapsed = false;
   activeSection = 'overview';
   currentMonth = new Date().getMonth();
+
+  constructor(private readonly auth: AuthService, private readonly router: Router) {}
+
+  /** Datos de la sección activa (título, subtítulo y acción del header). */
+  get currentSection(): { title: string; subtitle: string; action: string } {
+    return this.sections[this.activeSection] ?? this.sections['overview'];
+  }
 
   navItems = [
     { id: 'overview',   label: 'Resumen',     icon: '🏠', badge: '' },
@@ -35,29 +37,6 @@ export class Dashboard {
     reports:   { title: 'Reportes',        subtitle: 'Análisis y métricas',             action: 'Exportar' },
   };
 
-  get currentSection() {
-    return this.sections[this.activeSection] || this.sections['overview'];
-  }
-
-  toggleSidebar(): void {
-    this.sidebarCollapsed = !this.sidebarCollapsed;
-  }
-
-  setSection(id: string): void {
-    this.activeSection = id;
-  }
-
-  onAction(): void {
-    console.log('Action for:', this.activeSection);
-  }
-
-  /** Cierra la sesión y regresa a la presentación (home). */
-  exitPlatform(): void {
-    this.auth.logout();
-    this.router.navigate(['/home']);
-  }
-
-  // Overview stats
   stats = [
     { icon: '💰', label: 'Ingresos Totales',  value: '$48,250', change: '12.5% este mes', positive: true,  bg: 'rgba(108,99,255,0.15)' },
     { icon: '🧾', label: 'Facturas Emitidas', value: '342',     change: '8 esta semana',  positive: true,  bg: 'rgba(0,212,170,0.15)' },
@@ -85,7 +64,6 @@ export class Dashboard {
     { id: 'F-338', client: 'Comercial Norte',  date: '13/10/2026', amount: '$2,100', status: 'Pagada',   statusClass: 'badge-accent' },
   ];
 
-  // Inventory
   products = [
     { icon: '💻', name: 'Laptop Dell XPS',    price: '$1,299', stock: 45, stockPct: 45, stockLabel: 'En Stock',     stockClass: 'badge-accent',   barColor: 'var(--accent)' },
     { icon: '📱', name: 'iPhone 15 Pro',       price: '$999',   stock: 12, stockPct: 12, stockLabel: 'Stock Bajo',   stockClass: 'badge-warning',  barColor: 'var(--warning)' },
@@ -95,12 +73,28 @@ export class Dashboard {
     { icon: '🎧', name: 'Auriculares Sony',    price: '$349',   stock: 22, stockPct: 22, stockLabel: 'Stock Bajo',   stockClass: 'badge-warning',  barColor: 'var(--warning)' },
   ];
 
-  // Clients
   clients = [
     { initials: 'TC', name: 'TechCorp S.A.',      email: 'contacto@techcorp.com', invoices: 28, total: '$42,800', status: 'Activo', statusClass: 'badge-accent', color: 'linear-gradient(135deg,#6c63ff,#4e47d0)' },
     { initials: 'MX', name: 'Inversiones MX',     email: 'info@inversionesmx.com', invoices: 15, total: '$21,500', status: 'Activo', statusClass: 'badge-accent', color: 'linear-gradient(135deg,#00d4aa,#00a884)' },
-    { initials: 'XZ', name: 'Distribuidora XYZ',  email: 'ventas@distxyz.com', invoices: 42, total: '$68,200', status: 'VIP', statusClass: 'badge-primary', color: 'linear-gradient(135deg,#ffd166,#e6a000)' },
-    { initials: 'LA', name: 'Logística ABC',       email: 'logistica@abc.com', invoices: 8, total: '$9,800', status: 'Moroso', statusClass: 'badge-danger', color: 'linear-gradient(135deg,#ff4d6d,#c91040)' },
-    { initials: 'CN', name: 'Comercial Norte',     email: 'norte@comercial.com', invoices: 19, total: '$29,400', status: 'Activo', statusClass: 'badge-accent', color: 'linear-gradient(135deg,#6c63ff,#00d4aa)' },
+    { initials: 'XZ', name: 'Distribuidora XYZ',  email: 'ventas@distxyz.com',    invoices: 42, total: '$68,200', status: 'VIP', statusClass: 'badge-primary', color: 'linear-gradient(135deg,#ffd166,#e6a000)' },
+    { initials: 'LA', name: 'Logística ABC',       email: 'logistica@abc.com',    invoices: 8, total: '$9,800', status: 'Moroso', statusClass: 'badge-danger', color: 'linear-gradient(135deg,#ff4d6d,#c91040)' },
+    { initials: 'CN', name: 'Comercial Norte',     email: 'norte@comercial.com',  invoices: 19, total: '$29,400', status: 'Activo', statusClass: 'badge-accent', color: 'linear-gradient(135deg,#6c63ff,#00d4aa)' },
   ];
+
+  toggleSidebar(): void {
+    this.sidebarCollapsed = !this.sidebarCollapsed;
+  }
+
+  setSection(id: string): void {
+    this.activeSection = id;
+  }
+
+  onAction(): void {
+    console.log('Action for:', this.activeSection);
+  }
+
+  /** Cierra la sesión desde el pie del sidebar. */
+  logout(): void {
+    this.auth.logout().finally(() => this.router.navigate(['/home']));
+  }
 }

@@ -39,6 +39,18 @@ testem.log
 /typings
 __screenshots__/
 
+# Entornos: los valores reales no van al repo.
+# El environment base se versiona porque el build lo necesita.
+/src/environments/*
+!/src/environments/environment.ts
+.env
+.env.development
+.env.production
+!.env.example
+
+# Scripts de desarrollo locales (no se publican)
+/scripts
+
 # System files
 .DS_Store
 Thumbs.db

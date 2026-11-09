@@ -48,21 +48,28 @@
             <span class="sidebar-label" *ngIf="!sidebarCollapsed">Configuración</span>
           </a>
         </li>
+      </ul>
+
+      <!-- Cierre de sesión: último ítem del nav, justo sobre el pie del perfil -->
+      <ul class="nav-bottom">
         <li>
-          <a routerLink="/login" class="sidebar-link" id="sidebar-nav-logout" title="Cerrar sesión">
+          <button class="sidebar-link sidebar-logout" type="button" id="sidebar-logout-btn"
+                  (click)="logout()" title="Cerrar sesión">
             <span class="sidebar-icon">🚪</span>
             <span class="sidebar-label" *ngIf="!sidebarCollapsed">Cerrar sesión</span>
-          </a>
+          </button>
         </li>
       </ul>
     </nav>
 
-    <!-- User info -->
-    <div class="sidebar-user" *ngIf="!sidebarCollapsed">
-      <div class="user-avatar">A</div>
-      <div>
-        <div class="user-name">Admin</div>
-        <div class="user-role">Administrador</div>
+    <!-- Pie del sidebar: perfil y rol del usuario -->
+    <div class="sidebar-footer" *ngIf="!sidebarCollapsed">
+      <div class="sidebar-user">
+        <div class="user-avatar">A</div>
+        <div>
+          <div class="user-name">Admin</div>
+          <div class="user-role">Administrador</div>
+        </div>
       </div>
     </div>
   </aside>
@@ -88,10 +95,6 @@
             <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
           </svg>
           {{ currentSection.action }}
-        </app-button>
-        <!-- Acción de salir de la plataforma -->
-        <app-button variant="outline" size="small" id="header-exit-btn" (action)="exitPlatform()">
-          Salir
         </app-button>
         <button class="header-avatar" id="header-user-avatar" type="button" aria-label="Abrir perfil" title="Abrir perfil">A</button>
       </div>

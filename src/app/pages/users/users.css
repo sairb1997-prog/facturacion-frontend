@@ -1,0 +1,163 @@
+/* Users component styles */
+.users-list {
+  padding: 1rem;
+  max-height: calc(100vh - 200px);
+  overflow-y: auto;
+}
+
+.user-card {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 0.5rem;
+  background: white;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 1rem;
+  align-items: start;
+}
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.user-info h4 {
+  margin: 0 0 0.25rem 0;
+  font-size: 1rem;
+}
+
+.user-info p {
+  margin: 0.1rem 0;
+  font-size: 0.875rem;
+  color: #666;
+}
+
+.user-role {
+  font-weight: normal;
+  color: #6c63ff;
+}
+
+.user-status {
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: bold;
+}
+
+.user-status.Activo {
+  background: #e6fffa;
+  color: #00b377;
+}
+
+.user-status.VIP {
+  background: #ffe9c5;
+  color: #ff9800;
+}
+
+.user-status.Moroso {
+  background: #ffe4e6;
+  color: #e53935;
+}
+
+.user-actions {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+}
+
+@media (max-width: 600px) {
+  .user-card {
+    grid-template-columns: auto 1fr;
+    gap: 0.5rem;
+  }
+  .user-actions {
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: flex start;
+  }
+}
+
+/* ---- Menú lateral: el cierre de sesión se ancla al fondo del nav ---- */
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-bottom {
+  margin-top: auto;
+}
+
+/* ---- Pie del sidebar: perfil y rol del usuario ---- */
+.sidebar-footer {
+  margin-top: auto;
+  padding: 0.6rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.sidebar-user {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.5rem 0.4rem;
+  white-space: nowrap;
+}
+
+.sidebar-user .user-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: #fff;
+  flex-shrink: 0;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+}
+
+.sidebar-user .user-name {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.sidebar-user .user-role {
+  font-size: 0.75rem;
+  font-weight: normal;
+  color: var(--text-muted);
+}
+
+.sidebar-logout {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.65rem 0.75rem;
+  border: none;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.sidebar-logout:hover {
+  background: rgba(255, 77, 109, 0.12);
+  color: var(--danger);
+}

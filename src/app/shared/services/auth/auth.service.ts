@@ -1,79 +1,111 @@
-import { Injectable, signal } from '@angular/core';
+import { firstValueFrom } from 'rxjs';
+import { Injectable } from '@angular/core';
 
-import { APP_CONFIG } from '../../../core/config/app.config';
-import type { AuthSession, LoginCredentials, User } from '../../../core/models/user.model';
-import { readFromStorage, removeFromStorage, writeToStorage } from '../../utils/storage.utils';
-
-/** Simula la latencia de red hasta que exista backend real. */
-const SIMULATED_LATENCY_MS = 1500;
-/** La sesión demo expira a las 12 horas. */
-const SESSION_TTL_MS = 12 * 60 * 60 * 1000;
+import type {
+  AuthSession,
+  LoginCredentials,
+  User,
+} from '../../../core/models/user.model';
+import { ApiClient } from '../../../core/http/api-client.service';
+import {
+  clearSession as clearStoredSession,
+  isValidSession,
+  readSession,
+  saveSession,
+} from '../../../core/auth/session.storage';
 
 /**
  * Dominio: autenticación y sesión.
- * Encapsula todo lo relativo a login/logout; las páginas solo conocen
- * este servicio, nunca el mecanismo de persistencia ni la API.
  *
- * Cuando exista backend real, la llamada HTTP se realizará a través
- * del ApiClient de core/http; esta interfaz pública no cambia.
+ * Encapsula login/logout y la persistencia de la sesión. Las páginas solo
+ * conocen este servicio, nunca el mecanismo de almacenamiento ni la API.
+ *
+ * Endpoints del backend NestJS:
+ *  - POST /auth/login    → AuthSession `{ token, user, createdAt }`
+ *  - POST /auth/register → AuthSession
+ *  - POST /auth/logout   → 204 No Content (revoca el refresh token en BD)
  */
 @Injectable({ providedIn: 'root' })
-export class AuthService {
-  private static readonly STORAGE_KEY = `${APP_CONFIG.name.toLowerCase()}.session`;
+export class AuthService extends ApiClient {
+  protected override readonly resource: string = 'auth';
 
-  /** Credenciales de la cuenta demo mientras no exista backend real. */
-  private static readonly DEMO_CREDENTIALS: LoginCredentials = {
-    email: 'admin@factupro.com',
-    password: 'admin123',
-  };
-  private static readonly DEMO_USER: User = {
-    id: 'usr-demo',
-    name: 'Admin',
-    email: AuthService.DEMO_CREDENTIALS.email,
-    role: 'admin',
-  };
+  /** Sesión persistida, o null si no hay login activo. */
+  get session(): AuthSession | null {
+    return readSession();
+  }
 
-  /** Sesión actual (null si no hay nadie logueado o expiró). */
-  private readonly sessionSignal = signal<AuthSession | null>(this.readSession());
-  readonly session = this.sessionSignal.asReadonly();
-
+  /** Usuario autenticado, o null si nadie ha iniciado sesión. */
   get currentUser(): User | null {
-    return this.sessionSignal()?.user ?? null;
+    return readSession()?.user ?? null;
   }
 
-  /** Autentica al usuario. Rechaza con Error si las credenciales son inválidas. */
+  /** Access token actual, o null. */
+  get accessToken(): string | null {
+    return readSession()?.token ?? null;
+  }
+
+  /** true si hay una sesión con token y dentro del TTL. */
+  hasValidSession(): boolean {
+    return isValidSession(readSession());
+  }
+
+  /**
+   * Autentica contra el backend y **persiste la sesión** antes de devolverla.
+   * Sin este paso el guard no puede validar la navegación a rutas protegidas.
+   */
   async login(credentials: LoginCredentials): Promise<AuthSession> {
-    await new Promise((resolve) => setTimeout(resolve, SIMULATED_LATENCY_MS));
-
-    const valid =
-      credentials.email === AuthService.DEMO_CREDENTIALS.email &&
-      credentials.password === AuthService.DEMO_CREDENTIALS.password;
-    if (!valid) {
-      throw new Error('Credenciales incorrectas. Usa la cuenta demo.');
+    try {
+      const session = await firstValueFrom(
+        this.post<LoginCredentials, AuthSession>('login', credentials),
+      );
+      saveSession(session);
+      return session;
+    } catch (error) {
+      throw new Error(this.toErrorMessage(error, 'Credenciales incorrectas.'));
     }
-
-    const session: AuthSession = {
-      token: `demo-${Date.now()}`,
-      user: AuthService.DEMO_USER,
-      createdAt: Date.now(),
-    };
-    writeToStorage(AuthService.STORAGE_KEY, session);
-    this.sessionSignal.set(session);
-    return session;
   }
 
-  /** Cierra la sesión actual. */
-  logout(): void {
-    removeFromStorage(AuthService.STORAGE_KEY);
-    this.sessionSignal.set(null);
+  /**
+   * Revoca la sesión en el backend y elimina la copia local.
+   *
+   * Es importante suscribirse al `Observable` con `firstValueFrom`: un
+   * `Observable` de `HttpClient` es perezoso y `await this.post(...)` no
+   * dispara la petición HTTP. Por eso el request se envía antes de limpiar
+   * el storage (el refresh token debe seguir disponible para revocarlo).
+   */
+  async logout(refreshToken?: string): Promise<void> {
+    const token = refreshToken ?? readSession()?.refreshToken;
+
+    try {
+      if (token) {
+        await firstValueFrom(
+          this.post<{ refreshToken: string }, void>('logout', { refreshToken: token }),
+        );
+      }
+    } catch {
+      // Best effort: la sesión local se cierra aunque el backend falle.
+    } finally {
+      clearStoredSession();
+    }
   }
 
-  /** Recupera la sesión persistida; devuelve null si no existe o expiró. */
-  private readSession(): AuthSession | null {
-    const session = readFromStorage<AuthSession>(AuthService.STORAGE_KEY);
-    if (!session) {
-      return null;
+  /** Limpia la sesión local (usado por el guard ante datos corruptos/expirados). */
+  clearSession(): void {
+    clearStoredSession();
+  }
+
+  /** Traduce la respuesta del backend a un mensaje entendible. */
+  private toErrorMessage(error: unknown, fallback: string): string {
+    const backendMessage = (
+      error as { error?: { message?: string } } | null
+    )?.error?.message;
+    if (backendMessage) {
+      return backendMessage;
     }
-    return Date.now() - session.createdAt > SESSION_TTL_MS ? null : session;
+    const status = (error as { status?: number } | null)?.status;
+    if (status === 0) {
+      return 'No se pudo conectar con el servidor. Verifica que el backend esté corriendo.';
+    }
+    return fallback;
   }
 }

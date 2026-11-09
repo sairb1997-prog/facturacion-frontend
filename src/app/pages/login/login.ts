@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { AuthService } from '../../shared/services/auth/auth.service';
+import { ToastService } from '../../shared/services/toast/toast.service';
 
 @Component({
   selector: 'app-login',
@@ -26,7 +27,8 @@ export class Login {
 
   constructor(
     private router: Router,
-    private auth: AuthService
+    private auth: AuthService,
+    private toast: ToastService,
   ) {}
 
   togglePassword(): void {
@@ -42,7 +44,10 @@ export class Login {
     this.isLoading = true;
     this.auth
       .login({ email: this.email, password: this.password })
-      .then(() => this.router.navigate(['/dashboard']))
+      .then((session) => {
+        this.toast.success(`Bienvenido, ${session.user.name}.`, 3000);
+        return this.router.navigate(['/dashboard']);
+      })
       .catch((error: Error) => {
         this.errorMessage = error.message;
       })
@@ -51,9 +56,5 @@ export class Login {
       });
   }
 
-  loginDemo(): void {
-    this.email = 'admin@factupro.com';
-    this.password = 'admin123';
-    this.onLogin();
-  }
+  
 }
